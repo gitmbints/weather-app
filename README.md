@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.12.
 
+## Purpose
+
+- Setting up the OpenWeather API
+- Displaying weather data
+- Enabling offline mode with the service worker
+- Staying up to date with in-app notifications
+- Deploying the app with Firebase Hosting
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
