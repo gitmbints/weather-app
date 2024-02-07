@@ -14,14 +14,11 @@ export class WeatherComponent {
   constructor(private weatherService: WeatherService) {}
 
   search(city: string) {
-    if (!this.weather) {
-      this.isLoading = true;
-    }
+    this.weatherService.getWeather(city).subscribe((weather) => {
+      this.weather = weather;
+      this.isLoading = false;
+    });
 
-    this.weatherService
-      .getWeather(city)
-      .subscribe((weather) => (this.weather = weather));
-
-    this.isLoading = false;
+    this.isLoading = true;
   }
 }

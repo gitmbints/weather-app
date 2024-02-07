@@ -26,5 +26,5 @@
     <p>Wind: {{ weather.wind.speed }} m/s</p>
   </mat-card-content>
 </mat-card>
-<mat-spinner *ngIf="isLoading"></mat-spinner>
-<p *ngIf="!weather">Aucun résultat à afficher</p>
+<mat-spinner *ngIf="!weather && isLoading"></mat-spinner>
+<p *ngIf="!weather && !isLoading">Aucun résultat à afficher</p>
