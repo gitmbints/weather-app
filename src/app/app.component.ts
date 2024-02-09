@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   constructor(private updates: SwUpdate, private snackbar: MatSnackBar) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.updates.versionUpdates
       .pipe(
         filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'),
