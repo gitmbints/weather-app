@@ -16,9 +16,10 @@ export class WeatherService {
     const options = new HttpParams()
       .set('units', 'metric')
       .set('q', city)
-      .set('appId', this.apiKey);
+      .set('appId', this.apiKey)
+      .set('lang', 'fr');
 
-    return this.http.get<Weather>(this.apiUrl + 'weather', {
+    return this.http.get<Weather>(this.apiUrl + 'forecast', {
       params: options,
     });
   }

@@ -1,20 +1,25 @@
 export interface Weather {
-  weather: WeatherInfo[];
+  list: ListInfo[];
+  city: {
+    name: string;
+    country: string;
+  };
+}
+
+interface ListInfo {
+  dt: number;
   main: {
-    temp: number;
     pressure: number;
     humidity: number;
+    temp: number;
   };
+  weather: WeatherInfo[];
   wind: {
     speed: number;
   };
-  sys: {
-    country: string;
-  };
-  name: string;
 }
 
 interface WeatherInfo {
-  main: string;
+  description: string;
   icon: string;
 }

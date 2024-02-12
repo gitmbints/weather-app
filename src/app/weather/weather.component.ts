@@ -16,6 +16,7 @@ export class WeatherComponent {
   search(city: string) {
     this.weatherService.getWeather(city).subscribe((weather) => {
       this.weather = weather;
+      console.log(this.weather);
       this.isLoading = false;
     });
 
