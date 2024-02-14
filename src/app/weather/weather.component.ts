@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Weather } from '../weather';
+import { Observable } from 'rxjs';
+import { Forecast, Weather } from '../weather';
 import { WeatherService } from '../weather.service';
 
 @Component({
@@ -10,15 +11,17 @@ import { WeatherService } from '../weather.service';
 export class WeatherComponent {
   weather: Weather | undefined;
   isLoading: boolean = false;
+  forecast$: Observable<Forecast[]> | undefined;
 
   constructor(private weatherService: WeatherService) {}
 
   search(city: string) {
     this.weatherService.getWeather(city).subscribe((weather) => {
       this.weather = weather;
-      console.log(this.weather);
       this.isLoading = false;
     });
+
+    this.forecast$ = this.weatherService.getForecast(city);
 
     this.isLoading = true;
   }

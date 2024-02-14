@@ -1,58 +1,59 @@
-<mat-form-field>
-  <input
-    matInput
-    placeholder="Enter city"
-    #cityCtrl
-    (keydown.enter)="search(cityCtrl.value)"
-  />
-  <mat-icon matSuffix (click)="search(cityCtrl.value)">search</mat-icon>
-</mat-form-field>
+<div>
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Enter city"
+      #cityCtrl
+      (keydown.enter)="search(cityCtrl.value)"
+    />
+    <mat-icon matSuffix (click)="search(cityCtrl.value)">search</mat-icon>
+  </mat-form-field>
+  <mat-card *ngIf="weather && !isLoading">
+    <mat-card-header>
+      <mat-card-title
+        >{{ weather.name }}, {{ weather.sys.country }}</mat-card-title
+      >
+      <mat-card-subtitle>{{ weather.weather[0].main }}</mat-card-subtitle>
+    </mat-card-header>
+    <img
+      mat-card-image
+      src="https://openweathermap.org/img/wn/{{
+        weather.weather[0].icon
+      }}@2x.png"
+      [alt]="weather.weather[0].main"
+    />
+    <mat-card-content>
+      <h1>{{ weather.main.temp | number : "1.0-0" }} &#8451;</h1>
+      <p>Pressure: {{ weather.main.pressure }} hPa</p>
+      <p>Humidity: {{ weather.main.humidity }} %</p>
+      <p>Wind: {{ weather.wind.speed }} m/s</p>
+    </mat-card-content>
+  </mat-card>
+  <mat-spinner *ngIf="!weather && isLoading"></mat-spinner>
+</div>
 
-<mat-card *ngIf="weather">
-  <mat-card-header>
-    <mat-card-title>
-      {{ weather.city.name }}, {{ weather.city.country }}
-    </mat-card-title>
-    <mat-card-subtitle>{{
-      weather.list[0].weather[0].description | titlecase
-    }}</mat-card-subtitle>
-  </mat-card-header>
-  <img
-    mat-card-image
-    src="https://openweathermap.org/img/wn/{{
-      weather.list[0].weather[0].icon
-    }}@2x.png"
-    [alt]="weather.list[0].weather[0].description"
-  />
-  <mat-card-content>
-    <h1>{{ weather.list[0].main.temp | number : "1.0-0" }} &#8451;</h1>
-    <p>Pression: {{ weather.list[0].main.pressure }} hPa</p>
-    <p>Humidité: {{ weather.list[0].main.humidity }} %</p>
-    <p>Vent: {{ weather.list[0].wind.speed }} m/s</p>
-  </mat-card-content>
-</mat-card>
-
-<mat-card *ngFor="let item of weather?.list">
-  <mat-card-header>
-    <mat-card-title>
-      {{ item.dt | date }}
-    </mat-card-title>
-    <mat-card-subtitle>{{
-      item.weather[0].description | titlecase
-    }}</mat-card-subtitle>
-  </mat-card-header>
-  <img
-    mat-card-image
-    src="https://openweathermap.org/img/wn/{{ item.weather[0].icon }}@2x.png"
-    [alt]="item.weather[0].description"
-  />
-  <mat-card-content>
-    <h1>{{ item.main.temp | number : "1.0-0" }} &#8451;</h1>
-    <p>Pression: {{ item.main.pressure }} hPa</p>
-    <p>Humidité: {{ item.main.humidity }} %</p>
-    <p>Vent: {{ item.wind.speed }} m/s</p>
-  </mat-card-content>
-</mat-card>
-
-<mat-spinner *ngIf="!weather && isLoading"></mat-spinner>
-<p *ngIf="!weather && !isLoading">Aucun résultat à afficher</p>
+<mat-grid-list cols="3" rowHeight="600px" gutterSize="10px">
+  <mat-grid-tile *ngFor="let forecast of forecast$ | async">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{
+          forecast.dt_txt | date : "d MMM yyyy a"
+        }}</mat-card-title>
+        <mat-card-subtitle>{{ forecast.weather[0].main }}</mat-card-subtitle>
+      </mat-card-header>
+      <img
+        mat-card-image
+        src="https://openweathermap.org/img/wn/{{
+          forecast.weather[0].icon
+        }}@2x.png"
+        [alt]="forecast.weather[0].main"
+      />
+      <mat-card-content>
+        <h1>{{ forecast.main.temp | number : "1.0-0" }} &#8451;</h1>
+        <p>Pressure: {{ forecast.main.pressure }} hPa</p>
+        <p>Humidity: {{ forecast.main.humidity }} %</p>
+        <p>Wind: {{ forecast.wind.speed }} m/s</p>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
